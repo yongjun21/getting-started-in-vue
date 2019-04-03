@@ -1,38 +1,30 @@
 <template>
-  <div class="counter">
-    <div>Please pay ${{price}}</div>
-    <button @click="increment">Click</button>
+  <div class="my-counter">
+    <div>{{label}}</div>
+    <div>{{count}}</div>
+    <button @click="increment">+ {{label}}</button>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['rate', 'available'],
+  props: ['label'],
   data () {
     return {
-      count: 0
-    }
-  },
-  computed: {
-    price () {
-      return this.rate * this.count
+      count: 1
     }
   },
   methods: {
     increment () {
-      if (this.available < this.rate) return
       this.count++
-      this.$emit('update', this.rate)
+      this.$emit('update', this.count)
     }
   }
 }
-
 </script>
 
-<style lang="scss">
-.counter {
-  button {
-    font-size: inherit;
-  }
+<style>
+button {
+  font-size: inherit;
 }
 </style>

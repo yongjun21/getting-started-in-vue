@@ -1,48 +1,35 @@
 <template>
   <div id="app">
-    <my-counter ref="counter" v-for="item in items"
-      :key="item.label"
-      :rate="item.price"
-      :available="available"
-      @update="updateAvailable">
-    </my-counter>
+    <my-counter :label="labelA" @update="stateA = $event"></my-counter>
+    <div> X </div>
+    <my-counter :label="labelB" @update="stateB = $event"></my-counter>
+    <div> = </div>
+    <my-result>{{result}}</my-result>
   </div>
 </template>
 
 <script>
 import MyCounter from './components/MyCounter.vue'
+import MyResult from './components/MyResult.vue'
 
 export default {
   name: 'app',
   components: {
-    MyCounter
+    MyCounter,
+    MyResult
   },
   data () {
     return {
-      available: 100,
-      items: []
+      labelA: 'A',
+      labelB: 'B',
+      stateA: 1,
+      stateB: 1
     }
   },
-  methods: {
-    log (msg) {
-      console.log(msg)
-    },
-    updateAvailable (value) {
-      this.available = this.available - value
-    },
-    fetchItems () {
-      setTimeout(() => {
-        console.log('Items fetched')
-        this.items = [
-          { label: 'Apple', price: 5 },
-          { label: 'Banana', price: 10 },
-          { label: 'Coconut', price: 20 }
-        ]
-      }, 1000)
+  computed: {
+    result () {
+      return this.stateA * this.stateB
     }
-  },
-  created () {
-    this.fetchItems()
   }
 }
 </script>
@@ -57,8 +44,12 @@ export default {
   margin-top: 60px;
   font-size: 36px;
 
-  .counter {
-    margin-bottom: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > div + div {
+    margin-left: 30px;
   }
 }
 </style>
